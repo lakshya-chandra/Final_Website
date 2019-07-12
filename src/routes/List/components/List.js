@@ -4,43 +4,71 @@ class Userlist extends React.Component{
    constructor(props){
      super(props);
      this.state = {
-       users : []
+       users : [],
+       marks:[],
+       total:""
      }
   }
     componentWillMount(){
       this.props.getData()
+      this.props.newmarks()
+     
     }
     componentDidMount(){
+
       this.setState({
-        users : this.props.users
+      users : this.props.users
     })
+
+      this.setState({
+        marks:this.props.marks,
+      
+    })
+
+      this.setState({
+        total: this.props.total
+      })
   }
    render(){
+    
      const element = this.state.users.map(item => {
        return (     
-        <div className = "container">
-          <h2>MarkSheet</h2>
-          <table className = "table table-dark" key ="user">
-            <tbody>
-              <tr>
-                <th>{item.firstName}</th>
-                <td>{item.rollno}</td>
-                <td>{item.email}</td>
-                <td>{item.class}</td>
-                <td>Total Marks</td>
-                <td>grade</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-    )
-})
-  return(
-    <span>
-      {element}
-    </span>
+        <tr key ={item.rollno}>
+          <td>{item.firstName}</td>
+          <td>{item.rollno}</td>
+          <td>{item.email}</td>
+          <td>{item.class}</td>
+          <td>{this.state.total}</td>
+        </tr>
+        )
+     })
+      const marks = this.props.marks.map(item =>{
+      return (
+        <tr>
+          <td>Subject</td>
+          <td>{item.subject}</td>
+          <td>100</td>
+          <td>{item.marks}</td>
+        </tr>
+      )
+      })
+    
+     return(
+      <div>
+      <table className ="table table-dark">
+      <tbody>
+        {element} 
+      </tbody>
+      </table>
 
-     )
+        <table className ="table table-dark">
+        <tbody>
+          {marks} 
+        </tbody>
+        </table>
+        
+      </div>
+      )
   }
 }
 

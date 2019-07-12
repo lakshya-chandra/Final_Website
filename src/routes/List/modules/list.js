@@ -4,6 +4,9 @@ import { browserHistory } from 'react-router';
 // ------------------------------------
 export const GET_DATA = 'GET_DATA';
 export const SET_USERS_DATA = 'SET_USERS_DATA';
+export const NEW_MARKS = "NEW_MARKS";
+export const SET_NEW_MARKS = "SET_NEW_MARKS";
+export const TOTAL_MARKS = "TOTAL_MARKS";
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -13,12 +16,40 @@ export const setUsersData = (data) => {
     users : data
   }
 }
+
+export const totalMark = (data) => {
+  return {
+    type : TOTAL_MARKS,
+    total : data
+  }
+}
+
 export const getData = () => {
   return (dispatch) => {
     const usersData = JSON.parse(localStorage.getItem('key'));
     dispatch(setUsersData(usersData));
+    
   }
 } 
+export const setMarksData = (data) => {
+  return {
+    type : SET_NEW_MARKS,
+    marks : data
+  }
+}
+
+ export const newmarks = () => {
+  return (dispatch) => {
+    const usersData = JSON.parse(localStorage.getItem('marks'));
+    dispatch(setMarksData(usersData));
+
+    let total = 0;
+      usersData.map(item => {
+      total = total + parseInt(item.marks);
+    }) 
+    dispatch(totalMark(total));
+  }
+}
 // ------------------------------------
 // Actions creator
 // ------------------------------------
@@ -27,6 +58,18 @@ export const ACTION_HANDLERS = {
     return {
       ...state,
       users : action.users
+    }
+  },
+   [SET_NEW_MARKS]:(state, action) => {
+    return {
+      ...state,
+      marks : action.marks
+    }
+  },
+   [TOTAL_MARKS]:(state, action) => {
+    return {
+      ...state,
+      total: action.total
     }
   }
 }
@@ -39,8 +82,9 @@ export const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  counter: 0,
-  users : []
+  users : [],
+  marks:[],
+  total:[]
 }
 
 export default function listReducer (state = initialState, action) {

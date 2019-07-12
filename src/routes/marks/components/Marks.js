@@ -16,7 +16,7 @@ class markForm extends React.Component{
 	}
 	
   mark_save(val) {
-    this.props.markForm(val);
+    this.props.getMarks(val);
   }
   componentWillMount(){
     const  array2 =  JSON.parse(localStorage.getItem("user"))
@@ -31,11 +31,10 @@ class markForm extends React.Component{
     this.props.getSubject(e.target.value);
   }
   setMarks = (e)=> {
-        this.setState({ showResults: true });
+    this.setState({ showResults: true });
   }  
   Addmarks=(e)=>{
-    const userData = JSON.parse(localStorage.getItem('user','item.name'));
-    console.log("value",userData);
+    const userData = JSON.parse(localStorage.getItem('user'));
   } 
   render(){
     const elementss = this.state.marks!==null && this.state.marks.map(item =>{
@@ -58,50 +57,53 @@ class markForm extends React.Component{
 
 		return(
       <div>
-  			<form onSubmit = {this.props.handleSubmit(this.mark_save)}>
-  			  <div>
-          <div>
-            <label>Class</label>
-          </div>
-          <div>
-            <Field 
-               onChange={this.setValue}
-               className = "form-control"
-               name = "Class" 
-               component = "select">
-                 <option value = "Select">Select</option>
-                   {elementss}
-              </Field>
-            </div>
-            <div>
-              <label>Name</label>
-            </div>
-            <div>
-              <Field
-                className = "form-control" 
-                name = "names" 
-                component = "select">
-                <option value = "Select">Select</option>
-                {stuName}
-              </Field> 
-            </div>
-            <div>
-             <label>Subject</label>
-             </div>
-            <div>
-              <Field
-                onClick = {this.setMarks}
-                className = "form-control"
-                name = "subject"
-                component = "select">
-                  <option value = "Select">Select</option>
-                    {stuSubject}</Field>
-                      {this.state.showResults ? <input type="text" placeholder="Enter marks"></input>: null 
-              }
-            </div>
-          </div>
-  			</form>
-        <button type= "submit">Submit</button>
+  		<form onSubmit = {this.props.handleSubmit(this.mark_save)}>
+  		<div>
+      <div>
+      <label>Class</label>
+      </div>
+      <div>
+      <Field 
+         onChange={this.setValue}
+         className = "form-control"
+         name = "Class" 
+         component = "select">
+           <option value = "Select">Select</option>
+             {elementss}
+      </Field>
+      </div>
+      <div>
+      <label>Name</label>
+      </div>
+      <div>
+      <Field
+        className = "form-control" 
+        name = "names" 
+        component = "select">
+          <option value = "Select">Select</option>
+            {stuName}
+      </Field> 
+      </div>
+      <div>
+      <label>Subject</label>
+      </div>
+      <div>
+      <Field
+        onChange = {this.setMarks}
+        className = "form-control"
+        name = "subject"
+        component = "select">
+          <option value = "Select">Select</option>
+            {stuSubject}</Field>
+            <Field
+             className = "form-control"
+             name = "marks"
+             component = "input"
+            />
+      <button type= "submit">Submit</button>
+      </div>
+      </div>
+  	  </form>
       </div>
 			)
 	}

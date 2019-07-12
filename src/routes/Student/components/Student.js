@@ -26,7 +26,7 @@ class ContactForm extends React.Component {
   save(values) {
     this.props.submitForm(values);
   }
-
+  
   componentWillMount(){
     const  array1 = JSON.parse(localStorage.getItem("user"))
       this.state.classes = array1
@@ -37,50 +37,51 @@ class ContactForm extends React.Component {
         <option>{item.class}</option>
         )
     })
+
     return (
       <form onSubmit = {this.props.handleSubmit(this.save)}>
-        <div>
-          <label htmlFor = "firstName">Name</label>
-          <Field
-            name = "firstName"
-            component = {RenderField}
-            type = "text"
-            validate = {[required, maxLength15, minLength2]}
-          />
+      <div>
+      <label htmlFor = "firstName">Name</label>
+      <Field
+         name = "firstName"
+         component = {RenderField}
+         type = "text"
+         validate = {[required, maxLength15, minLength2]}
+      />
+      </div>
+      <div>
+      <label htmlFor = "rollno">Roll no.</label>
+      <Field
+         name = "rollno"
+         component = {RenderField}
+         type = "text"
+         validate ={[required,number]}
+      />
         </div>
         <div>
-          <label htmlFor = "rollno">Roll no.</label>
-          <Field
-             name = "rollno"
-             component = {RenderField}
-             type = "text"
-             validate ={[required,number]}
-          />
-        </div>
-        <div>
-          <label htmlFor = "email">Email</label>
-          <Field 
-          name = "email" 
-          component = {RenderField}
-          type = "email" 
-          validate = {[required,email]}
+        <label htmlFor = "email">Email</label>
+        <Field 
+           name = "email" 
+           component = {RenderField}
+           type = "email" 
+           validate = {[required,email]}
         />
         <div>
         <div>
         <label>Class</label>
         </div>
         <Field 
-          className = "form-control"
-          name = "class"  
-          component = "select"
-          >
-          <option value = "/">Select Class</option>
-            {elements}
-          </Field>
+           className = "form-control"
+           name = "class"  
+           component = "select"
+        >
+        <option value = "/">Select Class</option>
+          {elements}
+        </Field>
         </div>
         <button type = "submit" >Submit</button>
         </div>
-      </form>
+        </form>
     );
   }
 }

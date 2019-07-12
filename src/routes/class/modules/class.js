@@ -13,8 +13,8 @@ export const classForm = (value) => {
     let array_new = [];
     let data_new = JSON.parse(localStorage.getItem("user"));
       if (data_new != null) {
-        data_new.map(function(v) {
-        array_new.push(v);
+          data_new.map(function(v) {
+          array_new.push(v);
       });
     }
         array_new.push(value);

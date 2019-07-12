@@ -2,11 +2,12 @@ import {browserHistory} from 'react-router'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const MARKS_FORM = "MARKS_FORM"
-export const SET_DATA = "SET_DATA"
+
+export const SET_DATA = "SET_DATA";
+export const MARKS_FORM = 'MARKS_FORM';
 export const SET_STUDENT = "SET_STUDENT"
 export const SET_SUBJECT = "SET_SUBJECT"
-export const ADD_NEW_DATA ="ADD_NEW_DATA"
+export const MARKS_DATA = "MARKS_DATA"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -16,12 +17,7 @@ export const set_data = (data) =>{
 		users:data
 	}
 }
-export const marks_form = (data) =>{
-	return {
-		type:MARKS_FORM,
-		clas:data
-	}
-}
+
 export const set_student =(data) =>{
 	return{
 		type: SET_STUDENT,
@@ -34,12 +30,13 @@ export const set_subject =(data) =>{
 		subject: data
 	}
 }
-export const add_new_data = (data) =>{
+export const set_marks = (data) =>{
 	return{
-		type: ADD_NEW_DATA,
-		new:data
+		type: MARKS_FORM,
+		marks:data
 	}
 }
+
 export const getStudent = (value) =>{
 	return (dispatch) =>{
 		const userData = JSON.parse(localStorage.getItem('key'));
@@ -49,12 +46,10 @@ export const getStudent = (value) =>{
 					array.push(item.firstName);
 				}
 			})
-			console.log('valuuee',array);
 			dispatch(set_student(array));
 	}
 }
 export const getSubject = (value) =>{
-	console.log(value);
 	return (dispatch) =>{
 		const userData = JSON.parse(localStorage.getItem('user'));
 		const array = [];
@@ -63,38 +58,33 @@ export const getSubject = (value) =>{
 					array.push(item.subject);
 			}
 		})
-		console.log("calue",array);
 		dispatch(set_subject(array));
 	}
 }
-export const Add_data = (value) =>{
-  return dispatch =>{
-    const marks = [];
-    let add_marks_data = JSON.parse(localStorage.getItem("user"));
-      if(add_marks_data!= null){
-         add_marks_data.map(function(k){
-         marks.push(k)
-  });
-}
-        marks.push(value);
-        localStorage.setItem("user", JSON.stringify(marks));
-}
-        localStorage.setItem("user",JSON.stringify(marks));
-        dispatch(setItems(value));
-}
 
+export const getMarks = (values) =>{
+  return (dispatch) =>{
+    const array = [];
+    const data = JSON.parse(localStorage.getItem("marks"));
+    if (data !== null) {
+      data.map(function(v) {
+        array.push(v);
+      });
+    }
+    array.push(values);
+    localStorage.setItem("marks", JSON.stringify(array));
+    }
+    localStorage.setItem("marks",JSON.stringify(values));
+    dispatch(setItems(array));
+  
+    } 
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 export const ACTION_HANDLERS = {
 
-  [MARKS_FORM]:(state =initialState ,action) => {
-    return{
-      ...state,
-      items: action.items
-    }
-  },
+  
 
   [SET_DATA]:(state,action) =>{
   	return{
@@ -114,10 +104,10 @@ export const ACTION_HANDLERS = {
   		subject: action.subject
   	}
   },
-  [ADD_NEW_DATA]:(state,action) =>{
+  [MARKS_FORM]:(state,action) =>{
   	return{
   	...state,
-  	add_new:action.new
+  	marks:action.marks
   }
 }
 }
@@ -129,10 +119,9 @@ export const ACTION_HANDLERS = {
 
 const initialState = {
   items : [],
-  clas:[],
   student:[],
   subject:[],
-  add_new:[]
+  marks : []
 }
 
 export default function markReducer (state = initialState, action) {

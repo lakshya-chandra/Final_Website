@@ -10,8 +10,8 @@ export const submitForm = (values) => {
   return dispatch => {
 
 
-    let array = [];
-    let data = JSON.parse(localStorage.getItem("key"));
+  let array = [];
+  let data = JSON.parse(localStorage.getItem("key"));
     if (data !== null) {
       data.map(function(v) {
         array.push(v);
