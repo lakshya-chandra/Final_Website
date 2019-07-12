@@ -15,7 +15,8 @@ const mapStateToProps = (state) => {
   return  {
     users : state.list.users,
     marks:  state.list.marks,
-    total:  state.list.total
+    total:  state.list.total,
+    grade:  state.list.grade
   }
 }
 

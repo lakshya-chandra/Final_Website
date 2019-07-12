@@ -7,6 +7,7 @@ export const SET_USERS_DATA = 'SET_USERS_DATA';
 export const NEW_MARKS = "NEW_MARKS";
 export const SET_NEW_MARKS = "SET_NEW_MARKS";
 export const TOTAL_MARKS = "TOTAL_MARKS";
+export const GRADE = "GRADE"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -23,7 +24,12 @@ export const totalMark = (data) => {
     total : data
   }
 }
-
+export const setGrade = (data) =>{
+  return{
+    type: GRADE,
+    grade: data
+  }
+}
 export const getData = () => {
   return (dispatch) => {
     const usersData = JSON.parse(localStorage.getItem('key'));
@@ -48,6 +54,14 @@ export const setMarksData = (data) => {
       total = total + parseInt(item.marks);
     }) 
     dispatch(totalMark(total));
+      let l = ""
+      if(total > 100){
+        l = "A"
+     }
+     else{
+      l = "B"
+     }
+     dispatch(setGrade(l));
   }
 }
 // ------------------------------------
@@ -71,6 +85,12 @@ export const ACTION_HANDLERS = {
       ...state,
       total: action.total
     }
+  },
+  [GRADE]:(state,action) =>{
+    return{
+      ...state,
+      grade:action.grade
+    }
   }
 }
 // ------------------------------------
@@ -84,7 +104,8 @@ export const ACTION_HANDLERS = {
 const initialState = {
   users : [],
   marks:[],
-  total:[]
+  total:[],
+  grade:''
 }
 
 export default function listReducer (state = initialState, action) {

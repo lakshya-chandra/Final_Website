@@ -6,31 +6,32 @@ class Userlist extends React.Component{
      this.state = {
        users : [],
        marks:[],
-       total:""
+       total:"",
+       grade:""
      }
   }
     componentWillMount(){
       this.props.getData()
       this.props.newmarks()
-     
-    }
-    componentDidMount(){
+        let value = this.props.grade;
+      this.setState({
+        grade: value
+      })
 
+   }
+
+    componentDidMount(){
       this.setState({
       users : this.props.users
     })
-
       this.setState({
         marks:this.props.marks,
-      
     })
-
       this.setState({
         total: this.props.total
       })
   }
    render(){
-    
      const element = this.state.users.map(item => {
        return (     
         <tr key ={item.rollno}>
@@ -39,6 +40,7 @@ class Userlist extends React.Component{
           <td>{item.email}</td>
           <td>{item.class}</td>
           <td>{this.state.total}</td>
+          <td>{this.state.grade}</td>
         </tr>
         )
      })
